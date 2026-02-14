@@ -2,13 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#ff69b4">
     <title>To My Best Friends</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+            height: 100%;
         }
 
         body {
@@ -18,11 +28,20 @@
             background-position: center;
             background-attachment: fixed;
             min-height: 100vh;
+            min-height: -webkit-fill-available;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             overflow-x: hidden;
+        }
+
+        /* Mobile-specific background fix for iOS */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                background-attachment: scroll;
+                min-height: 100vh;
+            }
         }
 
         /* Floating Hearts Animation */
@@ -34,6 +53,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 1;
+            overflow: hidden;
         }
 
         .floating-heart {
@@ -41,6 +61,7 @@
             font-size: 30px;
             animation: float-up 8s linear infinite;
             opacity: 0;
+            will-change: transform;
         }
 
         @keyframes float-up {
@@ -64,11 +85,13 @@
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 1500px;
-            padding: 60px 50px;
+            max-width: 700px;
+            width: 100%;
+            padding: 40px 30px;
             animation: fadeIn 1s ease-in;
             position: relative;
             z-index: 2;
+            margin: 10px;
         }
 
         @keyframes fadeIn {
@@ -85,16 +108,17 @@
         h1 {
             color: #ff69b4;
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
+            margin-bottom: 25px;
+            font-size: clamp(1.8em, 5vw, 2.5em);
             font-weight: normal;
+            line-height: 1.3;
         }
 
         .heart {
             text-align: center;
-            font-size: 3em;
+            font-size: clamp(2em, 8vw, 3em);
             color: #e74c3c;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             animation: heartbeat 1.5s infinite;
         }
 
@@ -113,45 +137,46 @@
         .message {
             line-height: 1.8;
             color: #333;
-            font-size: 1.1em;
+            font-size: clamp(1em, 2.5vw, 1.1em);
             text-align: justify;
             margin-bottom: 20px;
         }
 
         .message p {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .signature {
             text-align: right;
             font-style: italic;
             color: #666;
-            margin-top: 40px;
-            font-size: 1.2em;
+            margin-top: 30px;
+            font-size: clamp(1em, 2.5vw, 1.2em);
+            line-height: 1.5;
         }
 
         .decorative-line {
             width: 100px;
             height: 3px;
             background: linear-gradient(90deg, #ff69b4, #ff1493);
-            margin: 30px auto;
+            margin: 25px auto;
             border-radius: 2px;
         }
 
         .stars {
             text-align: center;
-            font-size: 1.5em;
+            font-size: clamp(1.2em, 4vw, 1.5em);
             color: #f39c12;
             margin: 20px 0;
             letter-spacing: 5px;
         }
 
-        /* Gift Button */
+        /* Gift Button - Enhanced for mobile */
         .gift-button {
             display: block;
-            margin: 40px auto 20px;
-            padding: 20px 50px;
-            font-size: 1.3em;
+            margin: 35px auto 20px;
+            padding: 18px 40px;
+            font-size: clamp(1.1em, 3vw, 1.3em);
             font-family: 'Georgia', serif;
             color: white;
             background: linear-gradient(135deg, #ff69b4, #ff1493);
@@ -161,6 +186,11 @@
             box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
             transition: all 0.3s ease;
             font-weight: bold;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+            width: 100%;
+            max-width: 350px;
         }
 
         .gift-button:hover {
@@ -170,9 +200,10 @@
 
         .gift-button:active {
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.5);
         }
 
-        /* Modal/Popup */
+        /* Modal/Popup - Enhanced for mobile */
         .modal {
             display: none;
             position: fixed;
@@ -183,6 +214,8 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.8);
             animation: modalFadeIn 0.3s ease;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         @keyframes modalFadeIn {
@@ -198,7 +231,7 @@
             position: relative;
             background-color: white;
             margin: 5% auto;
-            padding: 40px;
+            padding: 35px 25px;
             width: 90%;
             max-width: 500px;
             border-radius: 20px;
@@ -208,24 +241,27 @@
 
         @keyframes modalSlideIn {
             from {
-                transform: translateY(-100px);
+                transform: translateY(-100px) scale(0.9);
                 opacity: 0;
             }
             to {
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
                 opacity: 1;
             }
         }
 
         .close {
             position: absolute;
-            right: 20px;
-            top: 15px;
-            font-size: 35px;
+            right: 15px;
+            top: 10px;
+            font-size: 40px;
             font-weight: bold;
             color: #aaa;
             cursor: pointer;
             transition: color 0.3s;
+            line-height: 1;
+            padding: 5px 10px;
+            touch-action: manipulation;
         }
 
         .close:hover {
@@ -233,7 +269,7 @@
         }
 
         .bouquet {
-            font-size: 120px;
+            font-size: clamp(80px, 20vw, 120px);
             margin: 20px 0;
             animation: bouquetPop 0.6s ease;
         }
@@ -253,15 +289,16 @@
         }
 
         .modal-caption {
-            font-size: 2.5em;
+            font-size: clamp(2em, 6vw, 2.5em);
             color: #ff69b4;
             font-weight: bold;
             margin: 20px 0;
             font-family: 'Georgia', serif;
+            line-height: 1.3;
         }
 
         .modal-message {
-            font-size: 1.2em;
+            font-size: clamp(1em, 3vw, 1.2em);
             color: #666;
             line-height: 1.6;
             margin-top: 20px;
@@ -275,12 +312,89 @@
             background-color: #ff69b4;
             position: absolute;
             animation: confetti-fall 3s linear;
+            will-change: transform;
         }
 
         @keyframes confetti-fall {
             to {
                 transform: translateY(100vh) rotate(360deg);
                 opacity: 0;
+            }
+        }
+
+        /* Tablet styles */
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            .container {
+                padding: 50px 40px;
+            }
+            
+            .modal-content {
+                margin: 10% auto;
+            }
+        }
+
+        /* Mobile styles */
+        @media screen and (max-width: 767px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+
+            .container {
+                padding: 30px 20px;
+                margin: 10px 0;
+            }
+
+            .message {
+                text-align: left;
+            }
+
+            .modal-content {
+                margin: 15% auto;
+                padding: 30px 20px;
+            }
+
+            .floating-heart {
+                font-size: 25px;
+            }
+
+            .stars {
+                letter-spacing: 3px;
+            }
+        }
+
+        /* Extra small mobile */
+        @media screen and (max-width: 375px) {
+            .container {
+                padding: 25px 15px;
+            }
+
+            h1 {
+                margin-bottom: 20px;
+            }
+
+            .gift-button {
+                padding: 15px 30px;
+            }
+        }
+
+        /* Landscape mobile */
+        @media screen and (max-height: 600px) and (orientation: landscape) {
+            body {
+                align-items: flex-start;
+                padding-top: 15px;
+                padding-bottom: 15px;
+            }
+
+            .container {
+                margin: 15px 0;
+            }
+
+            .modal-content {
+                margin: 3% auto;
+                max-height: 90vh;
+                overflow-y: auto;
             }
         }
     </style>
@@ -324,7 +438,7 @@
         
         <div class="signature">
             With all my love,<br>
-            Your BFF
+            Hannah
         </div>
     </div>
 
@@ -342,9 +456,30 @@
     </div>
 
     <script>
+        // Prevent zoom on double tap for iOS
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Optimize for mobile performance
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const heartInterval = isMobile ? 700 : 500;
+        const maxHearts = isMobile ? 8 : 10;
+
         // Create floating hearts
         function createFloatingHeart() {
             const heartsContainer = document.getElementById('floatingHearts');
+            
+            // Limit number of active hearts on mobile
+            if (isMobile && heartsContainer.children.length > maxHearts) {
+                return;
+            }
+            
             const heart = document.createElement('div');
             heart.classList.add('floating-heart');
             heart.innerHTML = '❤️';
@@ -360,36 +495,42 @@
         }
 
         // Create hearts continuously
-        setInterval(createFloatingHeart, 500);
+        setInterval(createFloatingHeart, heartInterval);
 
         // Initialize some hearts
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < maxHearts; i++) {
             setTimeout(createFloatingHeart, i * 300);
         }
 
         // Open gift modal
         function openGift() {
-            document.getElementById('giftModal').style.display = 'block';
+            const modal = document.getElementById('giftModal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent background scroll
             createConfetti();
         }
 
         // Close gift modal
         function closeGift() {
-            document.getElementById('giftModal').style.display = 'none';
+            const modal = document.getElementById('giftModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scroll
         }
 
         // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('giftModal');
             if (event.target == modal) {
-                modal.style.display = 'none';
+                closeGift();
             }
         }
 
-        // Create confetti effect
+        // Create confetti effect - optimized for mobile
         function createConfetti() {
             const colors = ['#ff69b4', '#ff1493', '#ffc0cb', '#ff6347', '#ff4500'];
-            for (let i = 0; i < 50; i++) {
+            const confettiCount = isMobile ? 35 : 50;
+            
+            for (let i = 0; i < confettiCount; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.classList.add('confetti');
@@ -404,9 +545,13 @@
                 }, i * 30);
             }
         }
+
+        // Handle orientation change
+        window.addEventListener('orientationchange', function() {
+            setTimeout(function() {
+                window.scrollTo(0, 0);
+            }, 100);
+        });
     </script>
 </body>
-
 </html>
-
-
