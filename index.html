@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To My Best Friends</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-image: url('485b7357ce0c7cf5e459f15fbd144070.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Floating Hearts Animation */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 30px;
+            animation: float-up 8s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            padding: 60px 50px;
+            animation: fadeIn 1s ease-in;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #ff69b4;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: normal;
+        }
+
+        .heart {
+            text-align: center;
+            font-size: 3em;
+            color: #e74c3c;
+            margin-bottom: 30px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.1);
+            }
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        .message {
+            line-height: 1.8;
+            color: #333;
+            font-size: 1.1em;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .message p {
+            margin-bottom: 20px;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            color: #666;
+            margin-top: 40px;
+            font-size: 1.2em;
+        }
+
+        .decorative-line {
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff69b4, #ff1493);
+            margin: 30px auto;
+            border-radius: 2px;
+        }
+
+        .stars {
+            text-align: center;
+            font-size: 1.5em;
+            color: #f39c12;
+            margin: 20px 0;
+            letter-spacing: 5px;
+        }
+
+        /* Gift Button */
+        .gift-button {
+            display: block;
+            margin: 40px auto 20px;
+            padding: 20px 50px;
+            font-size: 1.3em;
+            font-family: 'Georgia', serif;
+            color: white;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .gift-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.6);
+        }
+
+        .gift-button:active {
+            transform: translateY(-2px);
+        }
+
+        /* Modal/Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: white;
+            margin: 5% auto;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            text-align: center;
+            animation: modalSlideIn 0.5s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 35px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #ff1493;
+        }
+
+        .bouquet {
+            font-size: 120px;
+            margin: 20px 0;
+            animation: bouquetPop 0.6s ease;
+        }
+
+        @keyframes bouquetPop {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-caption {
+            font-size: 2.5em;
+            color: #ff69b4;
+            font-weight: bold;
+            margin: 20px 0;
+            font-family: 'Georgia', serif;
+        }
+
+        .modal-message {
+            font-size: 1.2em;
+            color: #666;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+
+        /* Confetti Effect */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #ff69b4;
+            position: absolute;
+            animation: confetti-fall 3s linear;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <div class="container">
+        <h1>To My Best Friends</h1>
+        
+        <div class="heart">❤️</div>
+        
+        <div class="decorative-line"></div>
+        
+        <div class="message">
+            <p>
+                There are some people in life who make everything brighter, who turn ordinary moments into extraordinary memories, and who understand you in ways that words can't fully express. You are those people to me.
+            </p>
+            
+            <p>
+                Through every laugh, every tear, every adventure, and every quiet moment, you've been there. You've celebrated my victories like they were your own and held my hand through the storms. You've seen me at my best and my worst, and somehow, you've chosen to stay.
+            </p>
+            
+            <p>
+                I don't say it enough, but I am so grateful for you. Grateful for the inside jokes that no one else understands, for the late-night conversations that stretch until dawn, for the way you can make me smile even on my darkest days. You've given me a safe space to be completely myself, and that's a gift I'll never take for granted.
+            </p>
+            
+            <p>
+                Life may take us in different directions, time may pass, and distances may grow, but know this: the bond we share is forever. You're not just my friends—you're my chosen family, my constants in an ever-changing world, and the pieces of my heart that walk around outside my body.
+            </p>
+            
+            <p>
+                Thank you for being you. Thank you for being mine. Here's to all the memories we've made and all the ones we have yet to create. I love you more than words could ever say.
+            </p>
+        </div>
+        
+        <div class="stars">✨ ✨ ✨</div>
+        
+        <button class="gift-button" onclick="openGift()">🎁 Open Your Gift 🎁</button>
+        
+        <div class="signature">
+            With all my love,<br>
+            Your Best Friend
+        </div>
+    </div>
+
+    <!-- Modal/Popup -->
+    <div id="giftModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeGift()">&times;</span>
+            <div class="bouquet">💐</div>
+            <div class="modal-caption">Happy Heart's Day!</div>
+            <div class="modal-message">
+                You deserve all the love and happiness in the world! 💕<br>
+                Thank you for being the amazing friend that you are!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createFloatingHeart() {
+            const heartsContainer = document.getElementById('floatingHearts');
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            heartsContainer.appendChild(heart);
+
+            // Remove heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Create hearts continuously
+        setInterval(createFloatingHeart, 500);
+
+        // Initialize some hearts
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createFloatingHeart, i * 300);
+        }
+
+        // Open gift modal
+        function openGift() {
+            document.getElementById('giftModal').style.display = 'block';
+            createConfetti();
+        }
+
+        // Close gift modal
+        function closeGift() {
+            document.getElementById('giftModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('giftModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#ff69b4', '#ff1493', '#ffc0cb', '#ff6347', '#ff4500'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+</html>
